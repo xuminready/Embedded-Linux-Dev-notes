@@ -12,6 +12,27 @@
 >
 >[Options for Directory Search](https://gcc.gnu.org/onlinedocs/gcc/Directory-Options.html)
 
+# Linux shared libraries secondary dependencies
+When building C/C++ program using sysroot mentioned above, one can run into the shared libraries secondary dependencies problem. The linker actually gives good hints
+
+>ld: warning: *.so, needed by *.so, not found (**try using -rpath or -rpath-link**)
+>
+>*.so: undefined reference to '**'
+
+As linker suggests, the solution is using -rpath or -rpath-link.
+for instance, add the flag below to **ld** or **g++**. 
+
+`-Wl,-rpath-link=${sysroot}/usr/lib/aarch64-linux-gnu:${sysroot}/lib/aarch64-linux-gnu"`
+
+>Note that I used -rpath key instead of -rpath-link. The difference is that -rpath-link is used at linking time only for checking that all symbols in the final executable can be resolved, whereas -rpath actually embeds the path you specify as parameter into the ELF:
+
+[Why does ld need -rpath-link when linking an executable against a so that needs another so?](https://stackoverflow.com/a/35748179)
+
+[Better understanding Linux secondary dependencies solving with examples](http://www.kaizou.org/2015/01/linux-libraries.html)
+
+Why need **-Wl,**???
+
+
 
 # Debian/Ubuntu cross toolchain packages
 
