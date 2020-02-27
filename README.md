@@ -39,25 +39,22 @@ Why need **-Wl,**???
 It's much easy to download a pre-built cross toolchain. Debian/Ubuntu based distribution has cross-tools package which make it easier. Using it with QEMU, ARM program can be execute on x86 machine.
 
 require dpkg version is greater than 1.16.2
-
->dpkg --add-architecture **armhf**
->
->dpkg --print-foreign-architectures
->
->apt-get update
->
->apt-get install crossbuild-essential-**armhf**
-
+```
+dpkg --add-architecture armhf
+dpkg --print-foreign-architectures
+apt-get update
+apt-get install crossbuild-essential-armhf
+```
 ## install foreign architecture packages
 
 This makes life much easier when working on cross compiling. 
 
 The package will be install **/usr/lib/arm-linux-geueabihf**
 
-apt-get install **package:architecture** 
+`apt-get install package:architecture`
 
 for example
->apt-get install libicu-dev:armhf
+`apt-get install libicu-dev:armhf`
 
 source:
 
@@ -68,7 +65,7 @@ source:
 ## QEMU emulating the foreign architecture
 It looks like QEMU can do a lot of things. **chroot** to foreign filesystem and execute foreign binary program on x86 platform. It's very useful for embedded development.
 
->apt install qemu-user-static
+`apt install qemu-user-static`
 
 [QEMU User Emulation](https://wiki.debian.org/QemuUserEmulation)
 
