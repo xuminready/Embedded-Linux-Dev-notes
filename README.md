@@ -32,6 +32,10 @@ for instance, add the flag below to **ld** or **g++**.
 
 Why need **-Wl,**???
 
+### for cmake 
+```
+ -DCMAKE_EXE_LINKER_FLAGS="--sysroot=${sysroot} -Wl,-rpath-link=${sysroot}/usr/lib/aarch64-linux-gnu:${sysroot}/lib/aarch64-linux-gnu" \
+```
 
 
 # Debian/Ubuntu cross toolchain packages
