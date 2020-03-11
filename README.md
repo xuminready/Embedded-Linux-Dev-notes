@@ -24,7 +24,7 @@ When building C/C++ program using sysroot mentioned above, one can run into the 
 As linker suggests, the solution is using -rpath or -rpath-link.
 for instance, add the flag below to **ld** or **g++**. 
 
-`-Wl,-rpath-link=${sysroot}/usr/lib/aarch64-linux-gnu:${sysroot}/lib/aarch64-linux-gnu"`
+`-Wl,-rpath-link=${sysroot}/usr/lib/aarch64-linux-gnu:${sysroot}/lib/aarch64-linux-gnu`
 
 >Note that I used -rpath key instead of -rpath-link. The difference is that -rpath-link is used at linking time only for checking that all symbols in the final executable can be resolved, whereas -rpath actually embeds the path you specify as parameter into the ELF:
 
