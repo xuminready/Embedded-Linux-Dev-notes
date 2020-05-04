@@ -101,5 +101,16 @@ initrd.img is a small temporary rootfs used when Linux kernel is bootup. It's on
 2. install initramfs-tools `apt install initramfs-tools`
 3. `update-initramfs -cv -k all`
 
-the initrd.img file will be generate in /boot/
 [update-initramfs](http://manpages.ubuntu.com/manpages/focal/man8/live-update-initramfs.8.html)
+the initrd.img file will be generate in /boot/
+
+# PXE Network Boot
+It's very convenient to use Network boot if you need to change to different rootfs, or in my case, no storage devices on board. It use tftp to serve pxelinux.cfg, Linux kernel, device tree, and initramfs. NFS is used to serve rootfs. You can mount tftp or nfs on a Linux machine to test the server is working good. Please notice set the right permission for NFS folder.
+
+[how to use PXE boot on ROCK Pi 4](https://wiki.radxa.com/Rockpi4/dev/u-boot/pxe)
+
+[How to boot the kernel via TFTP from U-Boot](https://wiki.st.com/stm32mpu/wiki/How_to_boot_the_kernel_via_TFTP_from_U-Boot)
+
+[Configuring PXE Network Boot Server on Ubuntu 18.04 LTS](https://linuxhint.com/pxe_boot_ubuntu_server/)
+
+[U-Boot Environment Variables](https://www.denx.de/wiki/view/DULG/UBootEnvVariables)
