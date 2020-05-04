@@ -78,7 +78,7 @@ It looks like QEMU can do a lot of things. **chroot** to foreign filesystem and 
 [Raspberry Pi Emulation Using qemu-user-static](https://wiki.debian.org/RaspberryPi/qemu-user-static)
 
 
-## use debootstrap to create a minimal Ubuntu/Debian rootfs
+# use debootstrap to create a minimal Ubuntu/Debian rootfs
 Besides the Linux Krenel, rootfs is needed for a Linux system. Rootfs contains all the user program and more. There're several distribution. If you want a minimal version of Ubuntu, you can use debootstrap to create one.  
 
 `debootstrap --arch $ARCH $RELEASE  $DIR $MIRROR`
@@ -87,10 +87,18 @@ example below is Ubuntu20.04 focal for arm64.
 
 `sudo debootstrap --arch=arm64 focal rootfs_path`
 
-once it's done, use chroot to add user and install software. Root password is not set by default, add a user, or set rootpassword.
+once it's done, use chroot to add user and install software. Root password is not set by default, add a user, or set rootpassword. Linux kernel modules is not include. 
 [chroot_rootfs](https://github.com/xuminready/chroot_rootfs)
 
 ```
 adduser mx // or use useradd
 adduser mx sudo // add mx to sudo group
 ```
+
+# create initrd.img using initramfs-tools
+initrd.img is a small temporary rootfs used when Linux kernel is bootup. It's only requires when the Linux kernel doesn't have storage driver build-in, and rootfs is on that storage driver. 
+1. copy Linux modules to **/lib/modules/**
+2. install initramfs-tools `apt install initramfs-tools`
+3. `update-initramfs -cv -k all`
+
+the initrd.img file will be generate in /boot/
