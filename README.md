@@ -79,7 +79,11 @@ It looks like QEMU can do a lot of things. **chroot** to foreign filesystem and 
 
 
 ## use debootstrap to create a minimal Ubuntu/Debian rootfs
-Besides the Linux Krenel, rootfs is needed for a Linux system. Rootfs contains all the user program and more. There're several distribution. If you want a minimal version of Ubuntu, you can use debootstrap to create one.  example below is Ubuntu20.04 focal for arm64.
+Besides the Linux Krenel, rootfs is needed for a Linux system. Rootfs contains all the user program and more. There're several distribution. If you want a minimal version of Ubuntu, you can use debootstrap to create one.  
+
+`debootstrap --arch $ARCH $RELEASE  $DIR $MIRROR`
+
+example below is Ubuntu20.04 focal for arm64.
 
 `sudo debootstrap --arch=arm64 focal rootfs_path`
 
