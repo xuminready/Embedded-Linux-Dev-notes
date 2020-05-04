@@ -102,3 +102,4 @@ initrd.img is a small temporary rootfs used when Linux kernel is bootup. It's on
 3. `update-initramfs -cv -k all`
 
 the initrd.img file will be generate in /boot/
+[update-initramfs](http://manpages.ubuntu.com/manpages/focal/man8/live-update-initramfs.8.html)
