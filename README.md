@@ -116,3 +116,5 @@ Please notice set the right permission for NFS export folder.
 [Configuring PXE Network Boot Server on Ubuntu 18.04 LTS](https://linuxhint.com/pxe_boot_ubuntu_server/)
 
 [U-Boot Environment Variables](https://www.denx.de/wiki/view/DULG/UBootEnvVariables)
+
+[Booting with an NFS Root Filesystem](https://wiki.emacinc.com/wiki/Booting_with_an_NFS_Root_Filesystem)
