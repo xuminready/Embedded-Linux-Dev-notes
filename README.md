@@ -118,3 +118,23 @@ Please notice set the right permission for NFS export folder.
 [U-Boot Environment Variables](https://www.denx.de/wiki/view/DULG/UBootEnvVariables)
 
 [Booting with an NFS Root Filesystem](https://wiki.emacinc.com/wiki/Booting_with_an_NFS_Root_Filesystem)
+
+
+# pipe in systemD service, and run a script before shutdown
+Need to turn off modem before shutdown Linux. 
+require: systemD, microcom
+```
+[Unit]
+Description=Turn off modem at ttyUSB3
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=/bin/sh -c "/bin/echo -ne 'AT+QPOWD\r' | /bin/busybox microcom -s 115200 -t 8000 /dev/ttyUSB3"
+
+[Install]
+WantedBy=multi-user.target
+```
+[How to run a script with systemd right before shutdown?](https://unix.stackexchange.com/questions/39226/how-to-run-a-script-with-systemd-right-before-shutdown)
+
+[Pipe output of script through Exec in systemd service?](https://unix.stackexchange.com/questions/496368/pipe-output-of-script-through-exec-in-systemd-service)
