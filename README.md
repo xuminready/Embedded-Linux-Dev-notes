@@ -107,7 +107,25 @@ the initrd.img file will be generate in /boot/
 # PXE Network Boot
 It's very convenient to use Network boot if you need to change to different rootfs, or in my case, no storage devices on board. It use tftp to serve pxelinux.cfg, Linux kernel, device tree, and initramfs. NFS is used to serve rootfs.  You can mount tftp or nfs on a Linux machine to debug the server before you try to network boot your board. I even tried to set TFTP and NFS server in Google cloud. TFTP is timeout, I guess it's because it's using UDP. NFS works OK, but very slow.
 
-Please notice set the right permission for NFS export folder.
+Please notice set the right permission for NFS export folder and TFTP file.
+
+## Ethernet Controller driver for network boot
+Linux kernel need to load Ethernet Controller driver to access rootfs on NFS. There are two way to add the driver for netowrk boot.
+1. compile Ethernet driver into the kernel. It depends on the SOC(Ethernet controller), there might be several moudle's need to enable.
+2. use an initrd.img(initramfs), the small rootfs contains some basic drivers.
+
+### pxelinux.cfg/default
+
+```
+LABEL LinuxBoot
+KERNEL Image
+FDT meson-gxl-s805x-libretech-ac.dtb
+APPEND initrd=initrd.img-5.6.7 boot=nfs root=/dev/nfs rw rootwait nfsroot=192.168.0.21:/home/mx/nfs/rootfs,nolock,vers=3,tcp ip=dhcp
+```
+
+*initrd=initrd.img* is optional.
+
+`mount -t nfs -o vers=3 <Server>:</SHARE> /<MOUNTPOINT>` is usful to test NFS server.Make sure *vers* is set to the right NFS version. 
 
 [how to use PXE boot on ROCK Pi 4](https://wiki.radxa.com/Rockpi4/dev/u-boot/pxe)
 
