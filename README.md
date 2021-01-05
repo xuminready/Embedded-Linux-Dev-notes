@@ -156,3 +156,27 @@ WantedBy=multi-user.target
 [How to run a script with systemd right before shutdown?](https://unix.stackexchange.com/questions/39226/how-to-run-a-script-with-systemd-right-before-shutdown)
 
 [Pipe output of script through Exec in systemd service?](https://unix.stackexchange.com/questions/496368/pipe-output-of-script-through-exec-in-systemd-service)
+
+# Compile Just One Kernel Module
+There's no need to rebuild the whole Linux kernel if only need some loadable modules. In my case, I want to use an USB DVD driver for Jetson Nano 2G. The drivers are not available in released Image. Lucky, all the drivers can be enabled as loadable modules.
+
+```
+make ARCH=arm64 menuconfig
+
+# enable the modules list below
+#BLK_DEV_SR (SCSI CDROM support)
+#UDF_FS (UDF file system support)
+#CDROM_PKTCDVD (Packet writing on CD/DVD media)
+
+make scripts prepare modules_prepare
+make -C . M=drivers/scsi
+make -C . M=drivers/cdrom/
+make -C . M=fs/udf/
+
+sudo cp drivers/scsi/*.ko /lib/modules/4.9.140-tegra/kernel/drivers/scsi/
+sudo cp drivers/cdrom/*ko /lib/modules/4.9.140-tegra/kernel/drivers/cdrom/
+sudo cp fs/udf/udf.ko /lib/modules/4.9.140-tegra/kernel/fs/udf/
+
+sudo depmod
+```
+[How to Compile Just One Kernel Module](https://yoursunny.com/t/2018/one-kernel-module/)
