@@ -173,9 +173,9 @@ make -C . M=drivers/scsi
 make -C . M=drivers/cdrom/
 make -C . M=fs/udf/
 
-sudo cp drivers/scsi/*.ko /lib/modules/4.9.140-tegra/kernel/drivers/scsi/
-sudo cp drivers/cdrom/*ko /lib/modules/4.9.140-tegra/kernel/drivers/cdrom/
-sudo cp fs/udf/udf.ko /lib/modules/4.9.140-tegra/kernel/fs/udf/
+sudo cp drivers/scsi/*.ko /lib/modules/$(uname -r)/kernel/drivers/scsi/
+sudo cp drivers/cdrom/*ko /lib/modules/$(uname -r)/kernel/drivers/cdrom/
+sudo cp fs/udf/udf.ko /lib/modules/$(uname -r)/kernel/fs/udf/
 
 sudo depmod
 ```
