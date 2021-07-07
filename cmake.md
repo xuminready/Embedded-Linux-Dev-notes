@@ -20,3 +20,7 @@ Some of the environment variables are overriden by predefined CMake Variables. e
 
 Resources
 [CMake Tutorial](https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b)
+
+
+CMake variables can be set in CMakeLists.txt using `set(<variable> <value>`, or set through command line `cmake -D<var>=<value>`
+
