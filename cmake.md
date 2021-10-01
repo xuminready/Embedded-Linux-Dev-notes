@@ -65,3 +65,63 @@ if (PATCHES)
 endif()
 ```
 [source](https://github.com/facebook/hhvm/blob/master/CMakeLists.txt)
+
+
+### Raspberry Pi cross compilation
+
+* GCC/G++ dynamic linking with pthread error
+
+
+```
+arm-linux-gnueabihf/libpthread.a(pthread_create.o): In function __pthread_create_2_1
+pthread_create.c:697: undefined reference to _dl_stack_flags
+libpthread.a(unwind.o): In function 'unwind_stop':
+...
+```
+
+Because libpthread.so is not found, libpthread.a is picked.
+Solution:
+Check the symlink for libpthread.so in the sysroot under <sysroot>/usr/lib/arm-linux-gnueabihf [credit](https://forum.qt.io/post/551485)
+  
+  ```
+#!/bin/bash
+
+export CROSS_COMPILE=${CROSS_COMPILE:-arm-linux-gnueabihf-}
+
+check_toolchain () {
+    if ! ( which ${CROSS_COMPILE}gcc \
+        && which ${CROSS_COMPILE}as  \
+        && which ${CROSS_COMPILE}ld ) ; then
+        echo "Could not find cross toolchain"
+        exit 1
+    fi
+}
+
+check_toolchain
+
+export sysroot=[ROOTFS FOLDER]
+
+mkdir arm32hf_build
+cd arm32hf_build
+
+cmake ../ \
+ -DCMAKE_SYSTEM_NAME=Linux \
+ -DCMAKE_SYSTEM_PROCESSOR=armv7l \
+ -DCMAKE_SYSROOT=${sysroot} \
+ -DCMAKE_FIND_ROOT_PATH=${sysroot} \
+ -DCMAKE_C_COMPILER=${CROSS_COMPILE}gcc \
+ -DCMAKE_CXX_COMPILER=${CROSS_COMPILE}g++ \
+ -DCMAKE_CXX_FLAGS="-Wl,-rpath-link=${sysroot}/usr/lib/arm-linux-gnueabihf" \
+ -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+ -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+ -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+ -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY \
+ -DCMAKE_POSITION_INDEPENDENT_CODE=True \
+ -DCMAKE_EXE_LINKER_FLAGS="--sysroot=${sysroot} -Wl,-rpath-link=${sysroot}/lib/arm-linux-gnueabihf" \
+ -DCMAKE_SHARED_LINKER_FLAGS="--sysroot=${sysroot}" \
+ -DCMAKE_BUILD_TYPE=Release \
+ -DCMAKE_INSTALL_PREFIX=./install
+ 
+ cmake --build .
+ make install  
+  ```
