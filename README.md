@@ -48,8 +48,11 @@ require dpkg version is greater than 1.16.2
 ```
 dpkg --add-architecture armhf
 dpkg --print-foreign-architectures
-apt-get update
-apt-get install crossbuild-essential-armhf
+
+
+apt update
+apt install crossbuild-essential-armhf
+apt install crossbuild-essential-arm64
 ```
 ## install foreign architecture packages
 
@@ -63,6 +66,7 @@ for example
 `apt-get install libicu-dev:armhf`
 
 source:
+[Raspberry Pi Cross-Compiling](https://www.raspberrypi.com/documentation/computers/linux_kernel.html#cross-compiling-the-kernel)
 
 [Exploring Raspberry Pi: Interfacing to the Real World with Embedded Linux](http://exploringrpi.com/)
 
