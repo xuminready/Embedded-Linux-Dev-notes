@@ -47,6 +47,7 @@ It's much easy to download a pre-built cross toolchain. Debian/Ubuntu based dist
 require dpkg version is greater than 1.16.2
 ```
 dpkg --add-architecture armhf
+dpkg --add-architecture arm64
 dpkg --print-foreign-architectures
 
 
