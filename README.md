@@ -73,6 +73,14 @@ source:
 
 [Multiarch](https://wiki.debian.org/Multiarch/HOWTO)
 
+## Running 32 bit(armhf) applications on arm64(aarch64)
+```
+dpkg --add-architecture armhf
+apt update
+apt install libc6:armhf libstdc++6:armhf
+```
+The dependency libraries for the armhf applications may not be installed by default. use `apt install LIBRARY_NAME:armhf` to install the dependencies for **armhf** architecture.
+
 ## QEMU emulating the foreign architecture
 It looks like QEMU can do a lot of things. **chroot** to foreign filesystem and execute foreign binary program on x86 platform. It's very useful for embedded development.
 
