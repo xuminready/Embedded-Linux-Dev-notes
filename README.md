@@ -55,6 +55,21 @@ apt update
 apt install crossbuild-essential-armhf
 apt install crossbuild-essential-arm64
 ```
+
+# debuging with gdb-multiarch
+Install gdb-multiarch
+` sudo apt install gdb-multiarch`
+compile the program with --static(require) and -g (default debug information)
+```
+ arm-linux-gnueabihf-gcc --static -g main.c 
+ qemu-arm -g 1234 a.out
+ gdb-multiarch a.out
+```
+Connect to gdb server` target remote localhost:1234`
+
+[ARM debug on Ubuntu](http://blog.coderhuo.tech/2018/09/23/arm_simulation/)
+
+[UP YOUR GDB GAME](https://hackaday.com/2022/06/14/linux-fu-up-your-gdb-game/)
 ## install foreign architecture packages
 
 This makes life much easier when working on cross compiling. 
